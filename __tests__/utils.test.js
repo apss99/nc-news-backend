@@ -1,9 +1,6 @@
-const createLookupObject = require("../db/seeds/seed-utils.js");
+const { createLookupObject } = require("../db/seeds/seed-utils.js");
 
 describe("createLookupObject", () => {
-  test("return an empty object when passed an empty array", () => {
-    expect(createLookupObject([], "", ""));
-  });
   test("return an object with a single key-value pair when passed an array containing a single object", () => {
     const input = [{ name: "Rose", age: 35 }];
     const expected = { Rose: 35 };
@@ -20,6 +17,6 @@ describe("createLookupObject", () => {
       purple: "Peanut",
       green: "Ginger Cheeks",
     };
-    expect(createLookupObject(input, "faveColour", "pet"));
+    expect(createLookupObject(input, "faveColour", "pet")).toEqual(expected);
   });
 });

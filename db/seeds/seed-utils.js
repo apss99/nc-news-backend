@@ -7,7 +7,6 @@ function createLookupObject(arrayOfObjects, newObjKey, newObjValue) {
     const valueToAdd = arrayOfObjects[i][newObjValue];
     lookupObj[keyToAdd] = valueToAdd;
   }
-  console.log(lookupObj);
   return lookupObj;
 }
 

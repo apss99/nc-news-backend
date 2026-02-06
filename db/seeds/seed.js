@@ -88,15 +88,12 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
       return db.query(queryStr);
     })
     .then((result) => {
-      //console.log(result.rows);
       const articlesLookupObject = createLookupObject(
         result.rows,
         "title",
         "article_id",
       );
-      console.log(articlesLookupObject);
       const formattedComments = commentData.map((comment) => {
-        console.log(articlesLookupObject[comment.article_title]);
         return [
           articlesLookupObject[comment.article_title],
           comment.body,
@@ -105,7 +102,6 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
           comment.created_at,
         ];
       });
-      console.log(formattedComments);
       const queryStr = format(
         `INSERT INTO comments (article_id, body, votes, author, created_at) VALUES %L`,
         formattedComments,
@@ -113,7 +109,6 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
       return db.query(queryStr);
     })
     .catch((error) => {
-      //console.log(error, "error");
       throw error;
     });
 };
