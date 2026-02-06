@@ -79,3 +79,21 @@ describe("GET /api/users", () => {
     });
   });
 });
+
+describe("GET /api/articles/5", () => {
+  test("gives status 200", async () => {
+    const response = await request(app).get("/api/articles/5");
+    expect(response.statusCode).toBe(200);
+    expect(typeof response.body.article).toBe("object");
+  });
+  test("article contains title, topic, author, body, created_at, votes, article_img_url keys", async () => {
+    const response = await request(app).get("/api/articles/5");
+    const article = response.body.article;
+    expect(article.title).toBeString();
+    expect(article.topic).toBeString();
+    expect(article.body).toBeString();
+    expect(article.created_at).toBeString();
+    expect(article.votes).toBeNumber();
+    expect(article.article_img_url).toBeString();
+  });
+});
