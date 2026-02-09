@@ -3,6 +3,7 @@ const {
   fetchAllArticles,
   fetchCommentsByArticle,
   createComment,
+  updateVotes,
 } = require("../models/articles.model");
 
 exports.getAllArticles = () => {
@@ -19,4 +20,8 @@ exports.getCommentsByArticle = (article_id) => {
 
 exports.postComment = (article_id, username, body) => {
   return createComment(article_id, username, body);
+};
+
+exports.changeVotes = (article_id, inc_votes) => {
+  return updateVotes(article_id, inc_votes);
 };

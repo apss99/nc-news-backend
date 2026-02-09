@@ -132,7 +132,6 @@ describe("POST /api/articles/:article_id/comments", () => {
       username: "rogersop",
       body: "Best thing I've read in my life",
     };
-    const userCheck = await db.query("SELECT username FROM users;");
     const response = await request(app)
       .post("/api/articles/5/comments")
       .send(newComment);
@@ -153,6 +152,25 @@ describe("POST /api/articles/:article_id/comments", () => {
     expect(response.body.comment.votes).toBe(0);
     expect(response.body.comment.article_id).toBe(5);
     expect(typeof response.body.comment.created_at).toBe("string");
-    console.log(response);
+  });
+});
+
+describe("PATCH /api/articles/:article_id", () => {
+  test("gives status 200", async () => {
+    const newVotes = { inc_votes: 7 };
+    const resetVotes = { inc_votes: -7 };
+    const response = await request(app).patch("/api/articles/3").send(newVotes);
+    expect(response.status).toBe(200);
+    const reset = await request(app).patch("/api/articles/3").send(resetVotes);
+    expect(reset.status).toBe(200);
+  });
+  test("increases votes on article", async () => {
+    const newVotes = { inc_votes: 7 };
+    const resetVotes = { inc_votes: -7 };
+    const response = await request(app).patch("/api/articles/3").send(newVotes);
+    const votes = response.body.votes;
+    expect(votes).toBe(7);
+    const reset = await request(app).patch("/api/articles/3").send(resetVotes);
+    expect(reset.body.votes).toBe(0);
   });
 });

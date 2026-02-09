@@ -3,6 +3,7 @@ const {
   getArticleById,
   getCommentsByArticle,
   postComment,
+  changeVotes,
 } = require("../services/articles.service");
 
 exports.handleGetAllArticles = (req, res, next) => {
@@ -30,5 +31,13 @@ exports.handlePostComment = (req, res, next) => {
   const { username, body } = req.body;
   postComment(article_id, username, body).then((comment) => {
     res.status(201).send({ comment });
+  });
+};
+
+exports.handleChangeVotes = (req, res, next) => {
+  const { article_id } = req.params;
+  const { inc_votes } = req.body;
+  changeVotes(article_id, inc_votes).then((article) => {
+    res.status(200).send(article);
   });
 };
