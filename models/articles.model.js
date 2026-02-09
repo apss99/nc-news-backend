@@ -16,3 +16,12 @@ exports.fetchArticleById = (article_id) => {
     .query(`SELECT * FROM articles WHERE article_id = $1;`, [article_id])
     .then(({ rows }) => rows[0]);
 };
+
+exports.fetchCommentsByArticle = (article_id) => {
+  return db
+    .query(
+      `SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at ASC;`,
+      [article_id],
+    )
+    .then(({ rows }) => rows);
+};

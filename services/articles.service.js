@@ -1,7 +1,7 @@
-const { fetchArticleById } = require("../models/articles.model");
 const {
+  fetchArticleById,
   fetchAllArticles,
-  getArticleById,
+  fetchCommentsByArticle,
 } = require("../models/articles.model");
 
 exports.getAllArticles = () => {
@@ -10,4 +10,8 @@ exports.getAllArticles = () => {
 
 exports.getArticleById = (article_id) => {
   return fetchArticleById(article_id);
+};
+
+exports.getCommentsByArticle = (article_id) => {
+  return fetchCommentsByArticle(article_id);
 };

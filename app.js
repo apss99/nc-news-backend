@@ -12,6 +12,4 @@ app.use("/api/articles", articlesRouter);
 
 app.use("/api/users", usersRouter);
 
-app.use("/api/articles/:article_id", articlesRouter);
-
 module.exports = app;
