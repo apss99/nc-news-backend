@@ -2,6 +2,7 @@ const {
   getAllArticles,
   getArticleById,
   getCommentsByArticle,
+  postComment,
 } = require("../services/articles.service");
 
 exports.handleGetAllArticles = (req, res, next) => {
@@ -21,5 +22,13 @@ exports.handleGetCommentsByArticle = (req, res, next) => {
   const { article_id } = req.params;
   getCommentsByArticle(article_id).then((comments) => {
     res.status(200).send({ comments });
+  });
+};
+
+exports.handlePostComment = (req, res, next) => {
+  const { article_id } = req.params;
+  const { username, body } = req.body;
+  postComment(article_id, username, body).then((comment) => {
+    res.status(201).send({ comment });
   });
 };
