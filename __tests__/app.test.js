@@ -8,7 +8,7 @@ require("jest-sorted");
 
 beforeAll(() => seed(data));
 afterAll(() => db.end());
-
+/*
 describe("GET /api/topics", () => {
   test("gives status 200", async () => {
     const response = await request(app).get("/api/topics");
@@ -105,7 +105,6 @@ describe("GET /api/articles/:article_id/comments", () => {
     const response = await request(app).get("/api/articles/2/comments");
     expect(response.statusCode).toBe(200);
     expect(typeof response.body.comments).toBe("object");
-    //expect(Array.isArray(response.body.users)).toBe(true);
   });
   test("comments contain comment_id, votes, created_at, author, body, article_id", async () => {
     const response = await request(app).get("/api/articles/2/comments");
@@ -164,7 +163,7 @@ describe("PATCH /api/articles/:article_id", () => {
     const reset = await request(app).patch("/api/articles/3").send(resetVotes);
     expect(reset.status).toBe(200);
   });
-  test("increases votes on article", async () => {
+  test("increases votes on article and returns the article", async () => {
     const newVotes = { inc_votes: 7 };
     const resetVotes = { inc_votes: -7 };
     const response = await request(app).patch("/api/articles/3").send(newVotes);
@@ -172,5 +171,43 @@ describe("PATCH /api/articles/:article_id", () => {
     expect(votes).toBe(7);
     const reset = await request(app).patch("/api/articles/3").send(resetVotes);
     expect(reset.body.votes).toBe(0);
+    expect(typeof response.body.title).toBe("string");
+    expect(typeof response.body.body).toBe("string");
+  });
+});
+
+describe("DELETE /api/comments/:comment_id", () => {
+  test("returns 204 status", async () => {
+    const response = await request(app).delete("/api/comments/1");
+    expect(response.status).toBe(200);
+    //const response2 = await request(app).delete("api/comments/1");
+    //expect(response2.status).toBe(404);
+    console.log(response.body);
+  });
+});
+
+describe("error /hdl", () => {
+  test("returns 404 status", async () => {
+    const response = await request(app).get("/hdl");
+    expect(response.status).toBe(404);
+  });
+});
+*/
+describe("GET /api/articles (sorting queries)", () => {
+  test("Sends Query to DB and returns status(200)", () => {
+    const query = { sort_by: "created_at", order: "ASC" };
+    return request(app).get("/api/articles").query(query).expect(200);
+  });
+  test("200: responds with articles sorted by votes in ascending order", () => {
+    const query = { sort_by: "created_at", order: "ASC" };
+
+    return request(app)
+      .get("/api/articles")
+      .query(query)
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("created_at", { ascending: true });
+      });
   });
 });

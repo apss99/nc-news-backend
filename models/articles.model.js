@@ -1,12 +1,24 @@
 const db = require("../db/connection");
 
-exports.fetchAllArticles = () => {
+exports.fetchAllArticles = ({ sort_by, order }) => {
+  const validColumns = [
+    "article_id",
+    "title",
+    "topic",
+    "author",
+    "body",
+    "created_at",
+    "votes",
+    "article_img_url",
+  ];
+  const validOrderOptions = ["ASC", "DESC", "asc", "desc"];
+  if (!validColumns.includes(sort_by) || !validOrderOptions.includes(order)) {
+    return Promise.reject({ status: 400, msg: "Invalid sorting request" });
+  }
   return db
     .query(
-      `SELECT articles.*, 
-    COUNT(comments.comment_id)::INT AS comment_count FROM articles 
-    LEFT JOIN comments ON comments.article_id = articles.article_id 
-    GROUP BY articles.article_id;`,
+      `
+    SELECT * FROM articles ORDER BY ${sort_by} ${order}`,
     )
     .then(({ rows }) => rows);
 };
@@ -47,3 +59,8 @@ exports.updateVotes = (article_id, inc_votes) => {
       return rows[0];
     });
 };
+
+/*    `SELECT articles.*, 
+    COUNT(comments.comment_id)::INT AS comment_count FROM articles 
+    LEFT JOIN comments ON comments.article_id = articles.article_id 
+    GROUP BY articles.article_id;`, */

@@ -7,9 +7,14 @@ const {
 } = require("../services/articles.service");
 
 exports.handleGetAllArticles = (req, res, next) => {
-  getAllArticles().then((articles) => {
-    res.status(200).send({ articles });
-  });
+  const { sort_by = "created_at", order = "ASC" } = req.query;
+  getAllArticles({ sort_by, order })
+    .then((articles) => {
+      res.status(200).send({ articles });
+    })
+    .catch((err) => {
+      next(err);
+    });
 };
 
 exports.handleGetArticleById = (req, res, next) => {
