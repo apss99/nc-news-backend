@@ -7,8 +7,8 @@ const {
 } = require("../services/articles.service");
 
 exports.handleGetAllArticles = (req, res, next) => {
-  const { sort_by = "created_at", order = "ASC" } = req.query;
-  getAllArticles({ sort_by, order })
+  const { sort_by = "created_at", order = "ASC", topic = null } = req.query;
+  getAllArticles({ sort_by, order, topic })
     .then((articles) => {
       res.status(200).send({ articles });
     })

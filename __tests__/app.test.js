@@ -8,7 +8,7 @@ require("jest-sorted");
 
 beforeAll(() => seed(data));
 afterAll(() => db.end());
-/*
+
 describe("GET /api/topics", () => {
   test("gives status 200", async () => {
     const response = await request(app).get("/api/topics");
@@ -180,9 +180,6 @@ describe("DELETE /api/comments/:comment_id", () => {
   test("returns 204 status", async () => {
     const response = await request(app).delete("/api/comments/1");
     expect(response.status).toBe(200);
-    //const response2 = await request(app).delete("api/comments/1");
-    //expect(response2.status).toBe(404);
-    console.log(response.body);
   });
 });
 
@@ -192,22 +189,47 @@ describe("error /hdl", () => {
     expect(response.status).toBe(404);
   });
 });
-*/
-describe("GET /api/articles (sorting queries)", () => {
-  test("Sends Query to DB and returns status(200)", () => {
-    const query = { sort_by: "created_at", order: "ASC" };
-    return request(app).get("/api/articles").query(query).expect(200);
-  });
-  test("200: responds with articles sorted by votes in ascending order", () => {
-    const query = { sort_by: "created_at", order: "ASC" };
 
-    return request(app)
-      .get("/api/articles")
-      .query(query)
-      .expect(200)
-      .then(({ body }) => {
-        const { articles } = body;
-        expect(articles).toBeSortedBy("created_at", { ascending: true });
-      });
+describe("GET /api/articles (sorting queries)", () => {
+  test("Sends Query to DB and returns status(200)", async () => {
+    const query = { sort_by: "created_at", order: "ASC" };
+    const response = await request(app).get("/api/articles").query(query);
+    expect(response.status).toBe(200);
+  });
+  test("200: responds with articles sorted by votes in ascending order", async () => {
+    const query = { sort_by: "created_at", order: "ASC" };
+    const response = await request(app).get("/api/articles").query(query);
+
+    expect(response.status).toBe(200);
+    expect(response.body.articles).toBeSortedBy("created_at", {
+      ascending: true,
+    });
+  });
+});
+
+describe("GET /api/articles (topic queries)", () => {
+  test("Sends Query to DB and returns status(200)", async () => {
+    const query = { topic: "coding" };
+    const response = await request(app).get("/api/articles").query(query);
+    expect(response.status).toBe(200);
+  });
+  test("200: responds with articles sorted by votes in ascending order", async () => {
+    const query = { topic: "mitch" };
+    const response = await request(app).get("/api/articles").query(query);
+
+    expect(response.status).toBe(200);
+    expect(response.body.articles[0].topic).toBe("mitch");
+  });
+});
+
+describe("GET /api/articles/:article_id (topic queries)", () => {
+  test("Sends Query to DB and returns status(200)", async () => {
+    const response = await request(app).get("/api/articles/3");
+    expect(response.status).toBe(200);
+  });
+  test("200: responds with articles sorted by votes in ascending order", async () => {
+    const response = await request(app).get("/api/articles/3");
+    expect(response.status).toBe(200);
+    expect(response.body.article.comment_count).not.toBe(null);
   });
 });
