@@ -1,5 +1,5 @@
 const app = require("./app");
-const port = 9643;
+const { PORT = 9090 } = process.env;
 app.listen(port, (error) => {
   if (error) {
     console.log("ERROR", error);
