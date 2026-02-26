@@ -24,9 +24,10 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
     .then(() => {
       return db.query(`
         CREATE TABLE users(
-        username VARCHAR(50) PRIMARY KEY NOT NULL, 
-        name VARCHAR(50), 
-        avatar_url VARCHAR(1000))`);
+        username VARCHAR(255) PRIMARY KEY NOT NULL, 
+        name VARCHAR(255), 
+        avatar_url VARCHAR(1000),
+        password VARCHAR(255) DEFAULT 'password')`);
     })
     .then(() => {
       return db.query(`CREATE TABLE articles(
