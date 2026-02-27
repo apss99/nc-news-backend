@@ -3,6 +3,7 @@ const topicsRouter = require("./routes/topics.routes");
 const articlesRouter = require("./routes/articles.routes");
 const usersRouter = require("./routes/users.routes");
 const commentsRouter = require("./routes/comments.routes");
+const loginRouter = require("./routes/login.routes");
 const app = express();
 const cors = require("cors");
 
@@ -21,5 +22,7 @@ app.use("/api/comments", commentsRouter);
 app.use((req, res) => {
   res.status(404).send({ msg: "Error 404: route not found" });
 });
+
+app.post("api/login", loginRouter);
 
 module.exports = app;
