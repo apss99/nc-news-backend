@@ -19,7 +19,7 @@ app.use("/api/users", usersRouter);
 
 app.use("/api/comments", commentsRouter);
 
-app.post("api/login", loginRouter);
+app.use("/api/login", loginRouter);
 
 app.use((req, res) => {
   res.status(404).send({ msg: "Error 404: route not found" });

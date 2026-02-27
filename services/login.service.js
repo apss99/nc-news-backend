@@ -1,7 +1,8 @@
 const { fetchUserByUsername } = require("../models/login.model");
+const bcrypt = require("bcrypt");
 
 exports.makeLoginAttempt = (username, password) => {
-  fetchUserByUsername(username).then((user) => {
+  return fetchUserByUsername(username).then((user) => {
     if (!user) throw Error("invalid username");
     return bcrypt.compare(password, user.password).then((validPassword) => {
       if (!validPassword) throw new Error("Invalid password");

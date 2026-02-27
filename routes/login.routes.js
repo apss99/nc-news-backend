@@ -1,5 +1,7 @@
 const express = require("express");
-const { handleMakeLoginAttempt } = require("../controllers/login.controller");
+const {
+  handleMakeLoginAttempt,
+} = require("../controllers/login.controller.js");
 
 const router = express.Router();
 router.post("/", handleMakeLoginAttempt);
