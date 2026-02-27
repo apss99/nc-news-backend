@@ -1,6 +1,7 @@
 const db = require("../connection");
 const format = require("pg-format");
 const { createLookupObject } = require("./seed-utils");
+const bcrypt = require("bcrypt");
 
 const seed = ({ topicData, userData, articleData, commentData }) => {
   return db
@@ -27,7 +28,7 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
         username VARCHAR(255) PRIMARY KEY NOT NULL, 
         name VARCHAR(255), 
         avatar_url VARCHAR(1000),
-        password VARCHAR(255) DEFAULT 'password')`);
+        password VARCHAR(255) DEFAULT '$2b$04$0PyI6KuqqB3VziWAfGV8z.8zK1o2itqOtGjpbH.sA408MywNWbO/q')`);
     })
     .then(() => {
       return db.query(`CREATE TABLE articles(
