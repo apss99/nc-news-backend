@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/northcoders/be-nc-news#readme",
   "devDependencies": {
+    "bcrypt": "^6.0.0",
     "husky": "^8.0.2",
     "jest": "^28.1.3",
     "jest-extended": "^2.0.0",

@@ -15,7 +15,7 @@ exports.handleCreateUser = (req, res, next) => {
     avatar_url = "https://t4.ftcdn.net/jpg/07/03/86/11/360_F_703861114_7YxIPnoH8NfmbyEffOziaXy0EO1NpRHD.jpg",
   } = req.body;
   bcrypt
-    .hash(password, 10)
+    .hash(password, 4)
     .then((hashedPassword) => {
       return createUser(username, name, avatar_url, hashedPassword);
     })
