@@ -17,7 +17,7 @@ exports.handleCreateUser = (req, res, next) => {
   bcrypt
     .hash(password, 4)
     .then((hashedPassword) => {
-      return createUser(username, name, avatar_url, hashedPassword);
+      return createUser(username, hashedPassword, name, avatar_url);
     })
     .then((user) => {
       delete user.password;
