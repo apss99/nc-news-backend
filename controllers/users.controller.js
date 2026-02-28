@@ -1,4 +1,8 @@
-const { getAllUsers, createUser } = require("../services/users.service");
+const {
+  getAllUsers,
+  createUser,
+  deleteUser,
+} = require("../services/users.service");
 const bcrypt = require("bcrypt");
 
 exports.handleGetAllUsers = (req, res, next) => {
@@ -24,4 +28,11 @@ exports.handleCreateUser = (req, res, next) => {
       res.status(201).send({ user });
     })
     .catch(next);
+};
+
+exports.handleDeleteUser = (req, res, next) => {
+  const { username, password } = req.body;
+  deleteUser(username, password).then((deletedUser) => {
+    res.status(200).send(deletedUser);
+  });
 };

@@ -26,7 +26,7 @@ exports.fetchAllArticles = ({ sort_by, order, topic }) => {
   queryString += ` GROUP BY articles.article_id ORDER BY ${sort_by} ${order}`;
   return db.query(queryString, queryValues).then(({ rows }) => rows);
 };
-
+//
 exports.fetchArticleById = (article_id) => {
   return db
     .query(

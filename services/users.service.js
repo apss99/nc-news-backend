@@ -1,7 +1,8 @@
+const { fetchUserByUsername } = require("../models/login.model");
 const {
   fetchAllUsers,
   makeUser,
-  fetchUserByUsername,
+  removeUser,
 } = require("../models/users.model");
 
 exports.getAllUsers = () => {
@@ -12,6 +13,12 @@ exports.createUser = (username, hashedPassword, name, avatar_url) => {
   return makeUser(username, hashedPassword, name, avatar_url);
 };
 
-exports.getUserByUsername = (username) => {
-  return fetchUserByUsername(username);
+exports.deleteUser = (username, password) => {
+  return fetchUserByUsername(username).then((user) => {
+    if (!user) throw Error("invalid username");
+    return bcrypt.compare(password, user.password).then((isPasswordValid) => {
+      if (!isPasswordValid) throw new Error("Wrong password");
+      return removeUser(username);
+    });
+  });
 };

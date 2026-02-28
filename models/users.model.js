@@ -14,3 +14,9 @@ exports.makeUser = (username, hashedPassword, name, avatar_url) => {
       return rows[0];
     });
 };
+
+exports.removeUser = (username) => {
+  return db
+    .query(`DELETE FROM comments WHERE username = $1 RETURNING *;`, [username])
+    .then(({ rows }) => rows[0]);
+};
