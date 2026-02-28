@@ -19,8 +19,9 @@ exports.makeUser = (username, hashedPassword, name, avatar_url) => {
 
 exports.removeUser = (username) => {
   return db
-    .query(`UPDATE users SET account_deleted = TRUE WHERE username = $1*;`, [
-      username,
-    ])
+    .query(
+      `UPDATE users SET account_deleted = TRUE WHERE username = $1 RETURNING *;`,
+      [username],
+    )
     .then(({ rows }) => rows[0]);
 };
