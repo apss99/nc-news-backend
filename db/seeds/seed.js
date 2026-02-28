@@ -28,7 +28,8 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
         username VARCHAR(255) PRIMARY KEY NOT NULL, 
         name VARCHAR(255), 
         avatar_url VARCHAR(1000),
-        password VARCHAR(255) DEFAULT '$2b$04$0PyI6KuqqB3VziWAfGV8z.8zK1o2itqOtGjpbH.sA408MywNWbO/q')`);
+        password VARCHAR(255) DEFAULT '$2b$04$0PyI6KuqqB3VziWAfGV8z.8zK1o2itqOtGjpbH.sA408MywNWbO/q',
+        account_deleted BOOLEAN DEFAULT FALSE)`);
     })
     .then(() => {
       return db.query(`CREATE TABLE articles(
