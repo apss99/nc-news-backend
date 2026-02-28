@@ -8,5 +8,5 @@ const {
 const router = express.Router();
 router.post("/", handleCreateUser);
 router.get("/", handleGetAllUsers);
-router.delete("/:username", handleDeleteUser);
+router.post("/:username", handleDeleteUser);
 module.exports = router;
