@@ -4,6 +4,7 @@ const {
   makeUser,
   removeUser,
 } = require("../models/users.model");
+const bcrypt = require("bcrypt");
 
 exports.getAllUsers = () => {
   return fetchAllUsers();
